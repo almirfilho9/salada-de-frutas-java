@@ -12,3 +12,19 @@ Um programa simples e divertido em Java que gera uma salada com **mais de 350 fr
 2. Execute: `java Main`
 
 ## Exemplo de saída
+
+Salada de frutas completa contém (350 frutas):
+
+Maçã (vermelha) - com caroço
+Banana (amarela)
+...
+
+🍎 Sugestão de hoje:
+
+Manga (amarela) - com caroço
+Pitaya (rosa)
+Jabuticaba (roxa)
+Kiwi (verde)
+Acerola (vermelha)
+
+Feito para praticar Java orientado a objetos! 🍌🍓🍇
