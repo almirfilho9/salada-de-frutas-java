@@ -392,6 +392,7 @@ public class Main {
         m.adicionarFruta(new Fruta("Mamey Colorado", "vermelha", true));
         m.adicionarFruta(new Fruta("Pepino Dulce", "amarelo", false));
         m.adicionarFruta(new Fruta("Tamarillo Rojo", "vermelho", false));
+        m.adicionarFruta(new Fruta("Você escolhe", "Desejo", false));
 
             m.salada();
             m.sugestaoDoDia();
