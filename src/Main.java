@@ -1,42 +1,118 @@
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Random;
+import java.util.Scanner;
 
 public class Main {
-    private List<Fruta> frutas = new ArrayList<>();
+    // Lista que armazena todas as frutas disponíveis no sistema
+    private List<Fruta> catalogoFrutas = new ArrayList<>();
 
+    // Metodo para adicionar frutas ao catálogo
     public void adicionarFruta(Fruta fruta) {
-        frutas.add(fruta);
+        catalogoFrutas.add(fruta);
     }
 
-    public void salada() {
-        System.out.println("Salada de frutas completa contém (" + frutas.size() + " frutas):");
-        for (Fruta f : frutas) {
-            System.out.println("- " + f);
-        }
-        System.out.println(); // linha em branco para separar
-    }
-
-    // Novo método para mostrar a sugestão aleatória
-    public void sugestaoDoDia() {
-        if (frutas.size() < 5) {
-            System.out.println("Não há frutas suficientes para uma sugestão de 5 frutas.");
-            return;
-        }
-
-        // Embaralha a lista e pega as 5 primeiras
-        List<Fruta> embaralhada = new ArrayList<>(frutas);
-        Collections.shuffle(embaralhada, new Random());
-
-        System.out.println("🍎 Sugestão de hoje:");
-        for (int i = 0; i < 5; i++) {
-            System.out.println((i + 1) + ". " + embaralhada.get(i));
-        }
+    // Getter para que outras partes do código acessem a lista
+    public List<Fruta> getCatalogo() {
+        return catalogoFrutas;
     }
 
     public static void main(String[] args) {
-        Main m = new Main();
+        Main app = new Main();
+        Scanner leitor = new Scanner(System.in);
+
+        // 1. Carrega todas as centenas de frutas
+        popularDados(app);
+
+        System.out.println("========================================");
+        System.out.println("       SISTEMA DE SALADAS FRUTAL        ");
+        System.out.println("========================================");
+        System.out.println("Temos " + app.getCatalogo().size() + " frutas cadastradas.");
+
+        // 2. Interatividade: Pergunta ao usuário
+        System.out.print("\nVocê gostaria de ver o catálogo completo? (s/n): ");
+        String resposta = leitor.nextLine();
+
+        if (resposta.equalsIgnoreCase("s")) {
+            System.out.println("\n--- CATÁLOGO COMPLETO ---");
+            for (int i = 0; i < app.getCatalogo().size(); i++) {
+                System.out.println(i + ". " + app.getCatalogo().get(i));
+            }
+            System.out.println("-------------------------\n");
+        } else {
+            System.out.println("\nSeguindo para as sugestões de saladas...\n");
+        }
+
+
+        // 2. Exibe o catálogo completo (opcional)
+        System.out.println("Catálogo carregado com " + app.getCatalogo().size() + " frutas.\n");
+
+        // 1. SALADA TROPICAL (Frutas amarelas e laranjas)
+        Salada tropical = new Salada("Explosão Tropical");
+        tropical.adicionarFruta(app.getCatalogo().get(1));  // Abacaxi
+        tropical.adicionarFruta(app.getCatalogo().get(53)); // Manga
+        tropical.adicionarFruta(app.getCatalogo().get(26)); // Carambola
+        tropical.adicionarFruta(app.getCatalogo().get(52)); // Mamão
+        tropical.exibirReceita();
+
+        System.out.println();
+
+// 2. SALADA VERMELHA (Antioxidante)
+        Salada vermelha = new Salada("Vermelhos Intensos");
+        vermelha.adicionarFruta(app.getCatalogo().get(59)); // Morango
+        vermelha.adicionarFruta(app.getCatalogo().get(35)); // Framboesa
+        vermelha.adicionarFruta(app.getCatalogo().get(27)); // Cereja
+        vermelha.adicionarFruta(app.getCatalogo().get(72)); // Romã
+        vermelha.exibirReceita();
+
+        System.out.println();
+
+// 3. SALADA "DETOX" (Frutas verdes)
+        Salada detox = new Salada("Green Mix");
+        detox.adicionarFruta(app.getCatalogo().get(45)); // Kiwi
+        detox.adicionarFruta(app.getCatalogo().get(49)); // Limão
+        detox.adicionarFruta(app.getCatalogo().get(64)); // Pera
+        detox.adicionarFruta(app.getCatalogo().get(51)); // Maçã (Verde)
+        detox.exibirReceita();
+
+        System.out.println();
+
+// 4. SALADA EXÓTICA (Frutas raras ou diferentes)
+        Salada exotica = new Salada("Tesouros do Oriente");
+        exotica.adicionarFruta(app.getCatalogo().get(48)); // Lichia
+        exotica.adicionarFruta(app.getCatalogo().get(71)); // Rambutão
+        exotica.adicionarFruta(app.getCatalogo().get(69)); // Pitaya
+        exotica.adicionarFruta(app.getCatalogo().get(54)); // Mangostão
+        exotica.exibirReceita();
+
+        System.out.println();
+
+// 5. SALADA ENERGIA (Frutas densas e doces)
+        Salada energia = new Salada("Energia Pura");
+        energia.adicionarFruta(app.getCatalogo().get(14)); // Banana
+        energia.adicionarFruta(app.getCatalogo().get(0));  // Abacate
+        energia.adicionarFruta(app.getCatalogo().get(29)); // Coco
+        energia.adicionarFruta(app.getCatalogo().get(19)); // Cacau
+        energia.exibirReceita();
+
+        System.out.println();
+
+        // 4. Uso Dinâmico (Sugestão do Dia Aleatória)
+        Salada sugestao = new Salada("Sugestão do Chef (Aleatória)");
+        List<Fruta> embaralhada = new ArrayList<>(app.getCatalogo());
+        Collections.shuffle(embaralhada);
+
+        for (int i = 0; i < 5; i++) {
+            sugestao.adicionarFruta(embaralhada.get(i));
+        }
+        sugestao.exibirReceita();
+
+        System.out.println("\n⚠️ Dica: Verifique os caroços antes de servir!");
+    }
+
+    // Metodo organizado para não poluir o main
+    private static void popularDados(Main m) {
+
         m.adicionarFruta(new Fruta("Abacate", "verde", true));
         m.adicionarFruta(new Fruta("Abacaxi", "amarelo", false));
         m.adicionarFruta(new Fruta("Açaí", "roxa", false));
@@ -393,9 +469,6 @@ public class Main {
         m.adicionarFruta(new Fruta("Pepino Dulce", "amarelo", false));
         m.adicionarFruta(new Fruta("Tamarillo Rojo", "vermelho", false));
 
-            m.salada();
-            m.sugestaoDoDia();
-            System.out.println(); // linha em branco para separar
-            System.out.println("Tira os caroços antes de fazer a sua salada 😂");
-        }
+    }
+
 }
